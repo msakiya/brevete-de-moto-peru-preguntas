@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Balotario de Estudio - Licencia Clase B</title>
+    <meta name="description" content="Presentación interactiva para estudiar las preguntas del balotario de licencia clase B.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="background-animation"></div>
+    
+    <div class="app-container">
+        <header>
+            <h1>Balotario Clase B</h1>
+            <div class="progress-container">
+                <div class="progress-text"><span id="current-page">1</span> / <span id="total-pages">208</span></div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill"></div>
+                </div>
+            </div>
+        </header>
+
+        <main class="card glass">
+            <div class="card-content" id="card-content">
+                <h2 class="question" id="question-text">Cargando pregunta...</h2>
+                <div class="answer-container">
+                    <p class="answer highlighted" id="answer-text"></p>
+                </div>
+            </div>
+        </main>
+
+        <div class="controls">
+            <button id="btn-prev" class="btn btn-secondary" aria-label="Pregunta anterior">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+                Anterior
+            </button>
+            <button id="btn-next" class="btn btn-primary" aria-label="Pregunta siguiente">
+                Siguiente
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
