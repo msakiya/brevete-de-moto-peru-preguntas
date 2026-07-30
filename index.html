@@ -3,50 +3,171 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Balotario de Estudio - Licencia Clase B</title>
-    <meta name="description" content="Presentación interactiva para estudiar las preguntas del balotario de licencia clase B.">
+    <title>Brevetes de Moto Perú</title>
+    <meta name="description" content="Página no oficial y gratuita para practicar el balotario del examen de reglas para brevete de moto en Perú.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css?v=2">
 </head>
 <body>
     <div class="background-animation"></div>
     
-    <div class="app-container">
+    <!-- VIEW: LANDING / REGISTRATION -->
+    <div id="view-landing" class="view active app-container">
+        <div class="card glass text-center">
+            <h1 class="main-title">Brevetes de Moto Perú <span id="dynamic-year">2026</span></h1>
+            <p class="subtitle">Aprende y practica las preguntas para tu examen de manejo de moto de manera 100% gratuita.</p>
+            
+            <div class="disclaimer">
+                <strong>Nota Importante:</strong> Esta es una página <strong>NO oficial</strong>. Las preguntas fueron obtenidas del balotario oficial del MTC del Perú, pero si el MTC realiza cambios de imprevisto, no nos hacemos responsables. ¡Estudia bajo tu propio criterio!
+            </div>
+
+            <form id="register-form" class="register-form">
+                <h2>Regístrate para guardar tu progreso</h2>
+                <div class="input-group">
+                    <label for="reg-name">Nombre</label>
+                    <input type="text" id="reg-name" required placeholder="Ej. Juan Pérez">
+                </div>
+                <div class="input-group">
+                    <label for="reg-email">Correo electrónico</label>
+                    <input type="email" id="reg-email" required placeholder="juan@ejemplo.com">
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Ingresar</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- VIEW: DASHBOARD -->
+    <div id="view-dashboard" class="view app-container">
+        <header class="dashboard-header glass">
+            <div>
+                <h2>¡Hola, <span id="dash-name">Piloto</span>!</h2>
+                <p>¿Qué haremos hoy?</p>
+            </div>
+            <button id="btn-logout" class="btn btn-text">Salir</button>
+        </header>
+
+        <div class="dashboard-grid">
+            <!-- STUDY CARD -->
+            <div class="card glass interactive-card" id="card-study">
+                <div class="card-icon">📚</div>
+                <h3>Estudiar Preguntas</h3>
+                <p>Repasa todo el balotario paso a paso.</p>
+                <div class="progress-container mt-2">
+                    <div class="progress-text">Avance: <span id="study-progress-text">0%</span></div>
+                    <div class="progress-bar">
+                        <div class="progress-fill bg-success" id="study-progress-fill"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- EXAM CARD -->
+            <div class="card glass interactive-card" id="card-exam">
+                <div class="card-icon">🏁</div>
+                <h3>Simulación de Examen</h3>
+                <p>40 preguntas aleatorias. Ponte a prueba como en el examen real.</p>
+                <div class="exam-stats mt-2">
+                    Último puntaje: <strong id="last-score-text">N/A</strong>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- VIEW: STUDY MODE -->
+    <div id="view-study" class="view app-container">
         <header>
-            <h1>Balotario Clase B</h1>
-            <div class="progress-container">
-                <div class="progress-text"><span id="current-page">1</span> / <span id="total-pages">208</span></div>
+            <div class="flex-between">
+                <button class="btn btn-secondary btn-small btn-home">⬅ Volver</button>
+                <h3>Modo Estudio</h3>
+            </div>
+            <div class="progress-container mt-1">
+                <div class="progress-text">Pregunta <span id="study-current">1</span> / <span id="study-total">408</span></div>
                 <div class="progress-bar">
-                    <div class="progress-fill" id="progress-fill"></div>
+                    <div class="progress-fill" id="study-fill"></div>
                 </div>
             </div>
         </header>
 
-        <main class="card glass">
-            <div class="card-content" id="card-content">
-                <h2 class="question" id="question-text">Cargando pregunta...</h2>
-                <div class="answer-container">
-                    <p class="answer highlighted" id="answer-text"></p>
+        <main class="card glass mt-2">
+            <div class="card-content">
+                <h2 class="question" id="study-q-text">Cargando...</h2>
+                <div class="options-container" id="study-options">
+                    <!-- Options injected here -->
                 </div>
             </div>
+            <div class="controls mt-2">
+                <button id="btn-study-prev" class="btn btn-secondary">Anterior</button>
+                <button id="btn-study-next" class="btn btn-primary">Siguiente</button>
+            </div>
         </main>
+    </div>
 
-        <div class="controls">
-            <button id="btn-prev" class="btn btn-secondary" aria-label="Pregunta anterior">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
-                Anterior
-            </button>
-            <button id="btn-next" class="btn btn-primary" aria-label="Pregunta siguiente">
-                Siguiente
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
-            </button>
+    <!-- VIEW: EXAM MODE -->
+    <div id="view-exam" class="view app-container">
+        <header>
+            <div class="flex-between">
+                <button class="btn btn-secondary btn-small" id="btn-abort-exam">Abandonar</button>
+                <h3>Simulacro</h3>
+            </div>
+            <div class="progress-container mt-1">
+                <div class="progress-text">Pregunta <span id="exam-current">1</span> / 40</div>
+                <div class="progress-bar">
+                    <div class="progress-fill bg-warning" id="exam-fill"></div>
+                </div>
+            </div>
+        </header>
+
+        <main class="card glass mt-2">
+            <div class="card-content">
+                <h2 class="question" id="exam-q-text">Cargando...</h2>
+                <div class="options-container interactive-options" id="exam-options">
+                    <!-- Options injected here -->
+                </div>
+            </div>
+            <div class="controls mt-2" style="justify-content: flex-end;">
+                <button id="btn-exam-next" class="btn btn-primary" disabled>Confirmar</button>
+            </div>
+        </main>
+    </div>
+
+    <!-- VIEW: EXAM RESULT -->
+    <div id="view-result" class="view app-container">
+        <div class="card glass text-center">
+            <h1 class="main-title" id="result-title">¡Examen Terminado!</h1>
+            
+            <div class="score-circle">
+                <svg viewBox="0 0 36 36" class="circular-chart">
+                  <path class="circle-bg"
+                    d="M18 2.0845
+                      a 15.9155 15.9155 0 0 1 0 31.831
+                      a 15.9155 15.9155 0 0 1 0 -31.831"
+                  />
+                  <path class="circle"
+                    id="score-circle-path"
+                    stroke-dasharray="0, 100"
+                    d="M18 2.0845
+                      a 15.9155 15.9155 0 0 1 0 31.831
+                      a 15.9155 15.9155 0 0 1 0 -31.831"
+                  />
+                  <text x="18" y="20.35" class="percentage" id="score-percentage">0%</text>
+                </svg>
+            </div>
+            <p class="score-text">Respondiste correctamente <strong id="score-correct">0</strong> de 40 preguntas.</p>
+
+            <button class="btn btn-primary mt-2 btn-home">Volver al Inicio</button>
+
+            <div class="failed-questions-container mt-3" id="failed-questions-container" style="display:none;">
+                <h3>Preguntas en las que te equivocaste:</h3>
+                <div id="failed-list" class="failed-list text-left">
+                    <!-- Failed items injected here -->
+                </div>
+            </div>
         </div>
     </div>
 
     <!-- Scripts -->
-    <script src="data.js"></script>
-    <script src="app.js"></script>
+    <script src="data.js?v=2"></script>
+    <script src="app.js?v=2"></script>
 </body>
 </html>
